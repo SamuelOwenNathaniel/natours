@@ -1,0 +1,129 @@
+.form{
+
+    //style all but last child
+    &__group:not(:last-child){
+        margin-bottom: 2rem;
+    }
+
+
+    &__input{ 
+        font-size: 1.5rem;
+        //NB that by default the font family is not set for input fields so we manually set it to inherit the global font we specified.
+        font-family: inherit;
+        color: inherit; //same as above so we set manually.
+        padding: 1.5rem 2rem; //1.5 top and bottom, 2 left and right 
+        border-radius: 3px;
+        background-color: rgba($color-white, .5);
+        border:none;
+        border-bottom: 3px solid transparent; //compensate for the focus border giving appearance of text moving up
+        width: 90%;
+        display: block;
+        transition: all .3s;
+
+        @include respond(tab-port){
+            width: 100%;
+        }
+
+    
+        
+        /*there is an automatic border applied to the input field when it is focused on
+        even if the normal border is set to none. We can style this automatic 'focused' border here*/
+        &:focus{
+            outline: none; //can be modified with color if wanted.
+
+            //add a small colored line under the input field.
+            box-shadow: 0 1rem 2rem rgba($color-black, .5);
+            border-bottom: 3px solid $color-primary-dark;
+        }
+
+        //if the field is focused and invalid. Invalid is standard feature of certain parameters eg. email input field.
+        &:focus:invalid{
+            border-bottom: 3px solid $color-secondary-dark;
+        }
+
+        /*Special Case pseudo ELEMENT (note the double colon) that can modify placeholder variables.
+        Here is it used to modify the appearance of the placeholder text in the input fields*/
+        &::-webkit-input-placeholder{
+            color: $color-grey-dark-2;
+        }
+    }
+
+    //hides the original radio button from view.
+    &__radio-input{
+        display: none;
+    }
+
+    &__label{
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: .7rem;
+        display: block;
+        transition: all .3s;
+    }
+
+    /*HTML allows use of specifying siblings (siblings are the components that share a common parent object.
+    to specify a sibling use the '+' or '~' symbol. + is used to specify the next immediate sibling. ~ is to specify any sibling.
+    The sibling (label) must be after the first element ('input' in this case) so it is important to pay attention to which order it is written in html. It is diffcult to interchange the order*/
+    //The following reads as form__input AND form__label
+    &__input:placeholder-shown + &__label{
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+
+    &__radio-group{
+        width: 49%;
+        display: inline-block;
+
+        @include respond(tab-port){
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    } 
+
+
+    &__radio-label{
+        font-size: 1.3rem;
+        cursor: pointer;//changes the cursor to a hand icon
+        position: relative;
+        padding-left: 5rem;
+        color: $color-black;
+    }
+
+    &__radio-button{
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary-dark;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        //NB the left and top here are used to position our custom button relative to the label text.
+        left: -.4rem;
+        top: -.7rem;
+
+        //inner circle of the radio button
+        &::after{
+            content: ""; // content property must be specified for any pseudo element.
+            height: 1.3rem;
+            width: 1.3rem;
+            display: block;
+            border-radius: 50%;
+            position: absolute;//the parent (&__radio-button) has position set as absolute. Setting it to relative is not necessary, just as long as its position is specified.
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%); //centralize the inner circle.
+            background-color: $color-primary-light;
+            opacity:0;
+            transition: opacity .2s;
+        }
+    }
+
+    // the ":checked" pseudo class is a special radio button specific parameter that allows us to do things when the button is selected/checked.
+    //Here we use the sibling of radio-input to get to the radio-button's after pseudo element.
+    &__radio-input:checked ~ &__radio-label &__radio-button::after{
+        opacity: 1;
+    }
+   
+
+}

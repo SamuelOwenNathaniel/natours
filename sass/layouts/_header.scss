@@ -1,0 +1,55 @@
+
+.header{
+    height: 95vh;
+    background-image: linear-gradient(to right bottom, 
+    rgba($color-primary-light, 0.8),
+    rgba($color-primary-dark, 0.8)), 
+    url(../img/hero.jpg); /* .. is used to move one folder back. So we moved from the css folder to the root and then to the image dir*/
+    /*the line above sets a color gradient on the image, and specifies the direciton of the gradient. its important that the url parameter is the last parameter. */
+    background-size: cover; /* tries to fit the element inside the box based on width of viewport.*/
+    background-position: top;
+    position: relative;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%); /*specifs a polygon in which the image would still be visible. Taken at top left then moving cw*/
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%); /*specifs a polygon in which the image would still be visible. Taken at top left then moving cw*/
+
+
+    @include respond(phone){
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%); 
+       clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);  
+      }
+
+
+    /*To perform nesting '&' is used. the '&' symbol represents the parent selector ie in this case '.header'
+    Then to nest another selector that has another class eg.
+    
+    .header_logo-box {
+        position:absolute;
+        top: 4rem
+        left:4rem;   
+    }
+  
+    replace the .header with & and paste the original .header_logo-box code in {} as shown below
+    */
+  
+    &__logo-box{
+      position:absolute;
+      /*the position top and left will use the parent element that has its position set to relative as its refernce to know where to start*/
+      top: 4rem; /*initially set to 40px but rem can be used here as well.*/
+      left:4rem; 
+    }
+  
+    &__logo{
+      height: 3.5rem;
+      /*only need to set height or width. The other will be figured out/scaled by browser.*/
+    }
+    
+    &__text-box{
+      position: absolute;
+      top:40%;
+      left:50%;
+      transform: translate(-50%, -50%); /*this makes the textbox go to the center of the parent.*/
+      /*since the hyperlink used for the header button is treated as a text box it can be aligned here*/
+      text-align: center;
+    }
+  
+  }

@@ -1,0 +1,46 @@
+
+@keyframes moveInLeft {
+    /*specify what happens at each frame of animation*/
+    0%{
+      opacity: 0;
+      transform: translateX(-10rem); /*moves from left.*/
+    }
+    80%{
+      transform: translateX(1rem); /*over shoots the center position before coming to rest at 0 */
+    }
+    100%{
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  
+  @keyframes moveInRight {
+    /*specify what happens at each frame of animation*/
+    0%{
+      opacity: 0;
+      transform: translateX(10rem); /*moves from left.*/
+    }
+  
+    80%{
+      transform: translateX(-1rem); /*over shoots the center position before coming to rest at 0 */
+    }
+    100%{
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  
+  @keyframes moveInButton {
+    /*specify what happens at each frame of animation*/
+    0%{
+      opacity: 0;
+      transform: translateY(3rem); /*moves from bottom.*/
+    }
+  
+    100%{
+      opacity: 1;
+      transform: translate(0);
+    }
+  }

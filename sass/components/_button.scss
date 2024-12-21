@@ -1,0 +1,117 @@
+
+/*link is a special state of a selector when it is anchored.
+There is also the :visited state for if the user has already clicked.
+Here the link will be styled same as the button so that the link won't take on the default blue and purple colors when clicked*/
+
+.btn{
+    //NB. an additional & was added to the top to also compensate for the button element on the booking section.
+    &,
+    &:link,
+    &:visited {
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.5rem 4rem; /*first value is top and bottom, second is left and right. 4 values can be added for each side.*/
+      display: inline-block;
+      border-radius: 6.9rem;;
+      transition: all 0.2s;
+      position: relative;
+      font-size: $default-font-size;
+
+      //change for <button> element on the booking section
+      border:none;
+      cursor: pointer; //set cursor to hand pointer icon if hovering over button.
+      }
+  
+    /*hover is another pseudo state that can be used.*/
+    &:hover{
+      transform: translateY(-3px); /* NB this translation amount is in relation to teh parent/link element*/
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.563); /*x-offset, y-offset, blur, color*/
+      
+      /*when we 'hover' over the pseudo button*/
+      &::after{ //reads as .btn:hover::after{}
+        transform: scaleX(1.4) scaleY(1.6); /*can just scale(value) to scale all dims.*/
+        opacity: 0;
+        }
+      }
+    
+    /*NB. the focus pseudo class was added to compensate for button elemnt on the booking section. This addition was to address an issue that did not occur with me.
+    I removed it due to it inducing a bug on the button at header. 
+    &:active,
+    &:focus{}
+    */
+    &:active{
+      outline: none;//added to compensate for button element in booking section.
+      transform: translateY(-1px); /*this is in relation to the initial link state.*/
+      box-shadow: 0 0.5rem 1rem rgba($color-black, 0.562);
+    }
+    
+    &--white{
+      background-color: $color-white;
+      color: $color-grey-dark;
+      //at this line, the '&' takes the previous selector, in this case '.btn + --white' = '.btn--white'
+      &::after{ // this now reads as .btn--white::after{}
+        background-color: $color-white;
+        }
+    }
+
+    &--green{
+      background-color: $color-primary-dark;
+      color: $color-white;
+      //at this line, the '&' takes the previous selector, in this case '.btn + --white' = '.btn--white'
+      &::after{ // this now reads as .btn--white::after{}
+        background-color: $color-primary-dark;
+        }
+    }
+    
+    /*using after pseudo elements. This adds an idential element. It's treated as a child of the parent element.
+    The content property must be specified even if it's empty.*/
+    
+    &::after{
+      content: "";
+      display: inline-block;
+      height: 100%; /*100 percent of the original button*/  
+      width: 100%;
+      border-radius: 6.9rem;
+    
+      /*hide the after button behind the original*/
+      position: absolute; /*set the position to be relative to the nearest element ie the button. For this to work, set the position of the btn to relative*/
+      top: 0;
+      left: 0;
+      /*z-index defines the position if one element is behind another.*/
+      z-index: -1;
+      transition: all 0.4s;
+    
+    }
+    
+    &--animated {
+      animation: moveInButton 0.4s ease-in-out 0.25s; /*duration, smoothing, delay*/
+      animation-fill-mode: backwards; /*applies button animation backwardss. This is to compensate for the button animation duration too short causing button to be visiible in rest positoin upon reload.*/
+    }
+  
+  }
+
+
+.btn-text{
+  &:link,
+  &:visited{
+    font-size: $default-font-size;
+    color: $color-primary-dark;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary-dark; //set a custom underline.
+    padding: 3px;
+    transition: all .2s;
+  }
+
+  &:hover{
+    background-color: $color-primary-dark;
+    color: $color-white;
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.562);
+    transform: translateY(-2px);
+  }
+
+  &:active{
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.562);
+    transform: translateY(0);
+  }
+}

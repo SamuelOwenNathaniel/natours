@@ -1,0 +1,103 @@
+.story{
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 1rem 6rem rgba($color-black, 0.5);
+    background-color: rgba($color-white, 0.6);
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem; //compensated padding for padding lost when the circle was moved to its position
+    font-size: $default-font-size; //this sets the font size of the paragraph. The heading takes the font size of the u-margin utiliity variable.
+    transform: skewX(-12deg);
+    position:relative;
+    
+    /*direct child selector does not work to undo the skew of both the text and the circle simultaneously therefore they must be applied individually.
+    & > * {
+        transform: skewX(12deg);
+    }*/
+
+    @include respond(tab-port){
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+
+    @include respond(phone){
+        transform: skewX(0);
+    }
+
+
+    &__shape{
+        width: 15rem;
+        height: 15rem;
+        //background-color: orangered; //used for debugging
+
+        float:left; //needed for shape-outside to work.
+        /*shape-outside is used to wrap the text so that each new line follows the edge of the polygon.
+        specify what polygon to use. Here we use a circle.
+        Note this approach only works if there is a width and height defined for the selector as well as floated.*/
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%); //radius at centerCoord width centercoord height 
+
+        //make the circle shape for the profile pic to be in.
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+
+        /*put some space between the circle and the text
+        When moving floated objects, it is best to use transforms insstead of margins as they could create problmes in the future.*/
+        transform: translateX(-3rem) skewX(12deg); //two transforms cannot occur at the same time, therefore it is important to put the skew as an additional property in this line.
+        position: relative;
+
+        @include respond(phone){
+            transform: translateX(-3rem) skewX(0);
+        }
+    }
+
+    &__img{
+        /*height is used instead of width becasue the image resolution as more width than height.
+        if width is used, then part of the circle will be blank as there won't be enough pixels on the
+        height dimension of the iamge to compensate.*/
+        height: 100%; 
+        transform: translateX(-4rem) scale(1.4); //scale zooms in the image.
+        backface-visibility: hidden;
+        transition: all .5s;
+
+    }
+
+    &__text{
+        transform: skewX(12deg);
+
+        @include respond(phone){
+            transform: skewX(0);
+        }
+    }
+
+    &__caption{
+        //centralize the caption element then centralize the text in the caption element.
+        position: absolute;
+        top: 50%;
+        left:50%;
+        transform: translate(-50%, 20%);
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center; //this aligns the text to be centered insdie of the caption element.
+        //background-color: orangered; // for debugging.
+        opacity: 0; //make it fully invisible.
+        transition: all .5s;
+        backface-visibility: hidden; //fixes small glitch with text animation
+    }
+
+    &:hover &__caption{
+        opacity: 1;
+        transform: translate(-50%,-50%); //note translate is used instead of translateY
+    }
+    
+    &:hover &__img{
+        transform: translateX(-4rem) scale(1);
+        //blur and darken the image.
+        filter: blur(3px) brightness(50%);
+
+    }
+}
+
+

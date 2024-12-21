@@ -1,0 +1,43 @@
+/*apply universal selector*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+
+/*set up rem variables for global font manipulation*/
+html {
+/*default font size is 16. But we want it to be 10px. Also we want to express it as a percentage. 10px is used to simplify calculatons for rem*/
+  font-size: 62.5%; //this makes it so that 1 rem = 10px.
+
+
+// if there are two conflicting queries, then the last one will be used ie. put the larger ones before the smaller ones.
+  @include respond(tab-land){
+    font-size: 56.25%; //1rem = 9px, 9/16 = 56.25
+  }
+
+  @include respond(tab-port){
+    font-size: 50%; //we want 1 rem = 8px at this break point.  8/16 = 50%. 16 is the default base font size of browser.
+  }
+
+  @include respond(big-desktop){
+    font-size: 75%; //1 rem = 12px. ie 12/16 = 75%
+  }
+
+}
+
+
+
+body {
+  box-sizing: border-box; /* change box model so border and padding are not added to height and width */
+  padding: 3rem; /* since root font size was set to 10, to get padding = 30px we use rem. ie. 3 * 10 = 30.*/
+
+  @include respond(tab-port){
+    padding: 0;
+  
+  }
+
+}  

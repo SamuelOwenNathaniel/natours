@@ -1,0 +1,124 @@
+/*set up project wide font definitions*/
+body {
+      font-family: "Lato", sans-serif; /*use Lato and if its not available use sans-serif*/
+      font-weight: 400; 
+      /*font-size: 16px;*/
+      line-height: 1.7; /*1.7 times the predefined value*/
+      color: $color-grey-dark;  /*text color*/
+      /*padding: 30px;*/ 
+      
+    }  
+    
+
+.heading-primary{
+    color: $color-white;
+    text-transform: uppercase;
+    backface-visibility: hidden; /*this compensates for if an animation drifts upwards*/
+    margin-bottom: 6rem; /*set some space between the bottom of the primary header and the button*/
+  
+    &--main{
+      display: block;
+      font-size: 6rem;
+      font-weight:400; /*the degree of boldness. Only those weightd for the font loaded in the html can be used here eg, 100, 300, 700, 900 */
+      letter-spacing: 3.5rem;
+  
+      /*two types of animations in css. 
+      1. The transition method -simple. Used for things like hovering over an element.
+      2. The alternative is with @keyframes. In this method it's best to animate only two properties
+      eg. the transform and the opacity property.
+      */
+  
+  
+      /*two bare minimum properties for animation to work.
+  
+      animation-name
+      animation-duration
+  
+      optionally an animation delay can be added. 
+      animation-delay specifys how many seconds to wait before starting an animation.
+      eg.
+      animation-delay: 3s;
+  
+      to specify how many times to loop an animation use:
+      aniamtion-iteration-count: 3;
+  
+      to define the acceleration of the animation use:
+      animation-timing-function: ease-out.
+  
+      Aside from ease-out there are other properties that can be set eg. ease-in 
+  
+      It's possible to reuse an animation and apply it to another element
+      eg. applying the moveInLeft animation if user hovers over the logo element defined above:
+  
+      .logo:hover{
+        animation: moveInLeft 1s ease-out;
+      }
+      */
+  
+      animation-name: moveInLeft;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      
+      @include respond(phone){
+        letter-spacing: 1rem;
+        font-family: 5rem;
+      }
+    }
+  
+    &--sub{
+      display: block;
+      font-size: 2.5rem;
+      font-weight:700;
+      letter-spacing:1.45rem;
+      animation: moveInRight 1s ease-out;
+      
+      @include respond(phone){
+        letter-spacing: .5rem;
+      }
+    }
+  }
+
+.heading-secondary{
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    //setup gradient on text. We create a background and format the bg to be inline block so it only occupies where the text is and not full width of view port
+    display: inline-block;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    //make it so that the bg is visible only at each letter ie where text is visible
+    background-clip: text; // not needed but throws warning if omitted
+    -webkit-background-clip: text;
+    //make the text transparent so that it doesn't block the full bg. Basically we made a stensil cutout of the text on the bg and now we want to make the text transparent
+    color:transparent;
+    letter-spacing: .2rem; // px could be used here if the px is so small that scaling would have negligible effect.
+    transition: all .2s;
+
+    @include respond(tab-port){
+      font-size: 3rem;
+    }
+
+    @include respond(phone){
+      font-size: 2.5rem;
+    }
+
+
+
+    &:hover{
+      transform: skewY(2deg) skewX(2deg) scale(1.1); //specified in degree
+      text-shadow: .5rem 1rem 2rem rgba($color-black, 0.5);/*x-offset, y-offset, blur, color*/
+    }
+  }
+  
+.heading-tertiary{
+  font-size: $default-font-size;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.paragraph{
+  font-size: $default-font-size;
+  //select all except last child
+  &:not(:last-child){
+    margin-bottom: 3rem;
+  }
+}
